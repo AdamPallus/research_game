@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Call the function to fetch the description after the page loads
+    fetchDescription();
+});
+
+function fetchDescription() {
+    // Perform an AJAX POST request to fetch the description
+    fetch('/get_description', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'researchTopic=' + encodeURIComponent('{{ original_proposal }}')
+    })
+    .then(response => response.text())
+    .then(description => {
+        // Update the page content with the fetched description
+        document.getElementById('dystopianExplanation').innerHTML = description;
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
+    
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Your Research Will be Abused</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class = "dystopia" id="dystopianExplanation">
+            <p>{{ description|safe }}</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Lab Game</title>
+    <!-- Include Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <div id="game-container">
+
+          
+        <section id="research-section">
+            <!-- Microscope icon next to the Perform Research button -->
+            <button id="research-button">
+                <span class="material-icons">biotech</span>
+                Perform Research
+            </button>
+            <p>Available Papers: <span id="available-papers">0</span></p>
+            <p>Lifetime Papers: <span id="lifetime-papers">0</span></p>
+            <p>Lab Funding: $<span id="lab-funding">0</span></p>
+            <section id="student-section">
+                <button id="accept-student-button" style="display: block">
+                    <span class="material-icons">person_add</span>
+                    Accept Grad Student
+                </button>
+                <p>Number of Students: <span id="students">0</span>/<span id="maxstudents">0</span></p>
+                <p>Graduates: <span id="graduates">0</span></p>
+            </section>
+            <section id="postdoc-section">
+                <button id="hire-postdoc-button" style="display: block;">
+                    <span class="material-icons">person_add</span>
+                    Hire Postdoc
+                </button>
+                <p>Number of Postdocs: <span id="postdocs">0</span></p>
+            </section>
+            <section id="admin-section">
+                <div class="upgrade">
+                    <button id="hire-grant-admin" onclick="hireGrantAdmin()">
+                        <span class="material-icons">person_add</span>
+                        <span id="hire-grant-admin-text">Hire Grant Administrator - $50,000</span>
+                    </button>
+                    <p id="grant-admin-text">Hire a grant administrator to apply for grants automatically.</p>
+                </div>
+            </section>
+        </section>
+
+        <section id="grants-section">
+            <h2>
+                <span class="material-icons">monetization_on</span>
+                Research Grant Opportunities
+            </h2>
+            <ul id="grants-list">
+                <!-- Grant opportunities will be listed here -->
+            </ul>
+        </section>
+        <section id="grants-in-progress-section">
+            <h2>
+                <span class="material-icons">fact_check</span>
+                Grants in Progress
+            </h2>
+            <ul id="grants-in-progress">
+                <!-- Grants in progress will be dynamically added here -->
+            </ul>
+        </section>
+<section id="upgrades-section">
+    <h2>
+        <span class="material-icons">upgrade</span>
+        Lab Upgrades
+    </h2>
+    <div class="upgrade">
+        <button id="max-funding-upgrade" onclick="buyMaxFundingUpgrade()">
+            <span class="material-icons">attach_money</span>
+            <span id="max-funding-text">Increase Max Funding - $10,000</span>
+        </button>
+        <p>Upgrade your lab's facilities to increase the maximum amount of grant funding you can receive.</p>
+    </div>
+    <div class="upgrade">
+        <button id="auto-accept-students-upgrade" onclick="buyAutoAcceptStudentsUpgrade()">
+            <span class="material-icons">school</span>
+            <span id="auto-accept-button-text">Auto Accept Students - $20,000</span>
+        </button>
+        <p id="auto-accept-text">Automatically accept new students.</p>
+    </div>
+    
+    <div class="upgrade">
+        <button id="increase-grant-rate" onclick="buyIncreaseGrantRate()">
+            <span class="material-icons">trending_up</span>
+            <span id="increase-grant-rate-text">Upgrade New Grant Rate - $1,000</span>
+        </button>
+        <p id="new-grant-rate">Increases the rate at which new grants are available</p>
+    </div>
+
+    
+    
+
+</section>
+
+    </div>
+    <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/state.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>

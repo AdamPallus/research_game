@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Response</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Original Proposal -->
+        <div class="email original-message">
+            <p class="email-body">{{ original_proposal }}</p>
+        </div>
+
+        <!-- Response Email -->
+        <div class="email response-email">
+            <div class="email-header" id="emailHeader">
+                <!-- Placeholder for email header -->
+            </div>
+            <div class="email-body" id="emailBody">
+                <!-- Placeholder for email body -->
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-container">
+            <form id="tryAgainForm" action="/" method="POST" style="display: none;">
+                <input type="hidden" name="researchTopic" value="{{ original_proposal }}">
+                <a href="javascript:void(0)" onclick="document.getElementById('tryAgainForm').submit();" class="btn-try-again">Try Again</a>
+            </form>
+            <form id="successForm" action="/description" method="POST" style="display: none;">
+                <input type="hidden" name="researchTopic" value="{{ original_proposal }}">
+                <a href="javascript:void(0)" onclick="document.getElementById('successForm').submit();" class="btn-success">Let's go!</a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchResponse();
+        });
+        
+        function fetchResponse() {
+            fetch('/get_response', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'researchTopic=' + encodeURIComponent('{{ original_proposal }}')
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.outcome === "success") {
+                    document.getElementById('emailHeader').innerHTML = "From: " + data.email_message.from + "<br>To: " + data.email_message.to + "<br>Subject: " + data.email_message.subject;
+                    document.getElementById('emailBody').innerHTML = data.email_message.body;
+                    document.getElementById('successForm').style.display = 'block';
+                } else if (data.outcome === "pending") {
+                    // Handle pending outcome, if needed
+                    document.getElementById('emailHeader').innerHTML = "From: " + data.email_message.from + "<br>To: " + data.email_message.to + "<br>Subject: " + data.email_message.subject;
+                    document.getElementById('emailBody').innerHTML = data.email_message.body;
+                } else {
+                    document.getElementById('emailHeader').innerHTML = "From: " + data.email_message.from + "<br>To: " + data.email_message.to + "<br>Subject: " + data.email_message.subject;
+                    document.getElementById('emailBody').innerHTML = data.email_message.body;
+                    document.getElementById('tryAgainForm').style.display = 'block';
+
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
